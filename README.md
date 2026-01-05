@@ -1,46 +1,82 @@
-Terminal Expert CAC40
-I. Description du projet
-Ce projet est un terminal boursier interactif destiné à l’analyse des actions du CAC 40. Il combine plusieurs approches pour offrir une vision complète du marché :
+# Terminal Expert CAC40
 
-Visualisation des prix : Affichage historique avec chandeliers japonais (Candlesticks).
+---
 
-Indicateurs financiers : Calcul automatique des rendements et de la volatilité.
+## I. Description du projet
 
-Analyse de sentiment : Évaluation à partir des titres financiers récents via NLTK – VADER.
+Ce projet est un **terminal boursier interactif** destiné à l’analyse des actions du **CAC 40**.  
+Il combine plusieurs approches complémentaires afin d’offrir une **vision globale et structurée des marchés financiers** :
 
-Machine Learning : Modèle de prédiction à court terme (Random Forest Regressor) pour estimer le prix de clôture à J+1.
+- **Visualisation des prix** :  
+  Affichage de l’historique des cours sous forme de chandeliers japonais (*Candlesticks*).
 
-Intelligence Artificielle : Génération d’une analyse textuelle synthétique via Mistral AI pour contextualiser les résultats.
+- **Indicateurs financiers** :  
+  Calcul automatique des rendements et de la volatilité à partir des données de marché.
 
-      Note : L’objectif est de fournir une aide à la lecture des marchés sans prétendre remplacer une analyse humaine ou donner des conseils financiers.
+- **Analyse de sentiment** :  
+  Évaluation du sentiment médiatique à partir des titres financiers récents grâce à **NLTK – VADER**.
 
-II. Fonctionnalités principales
-      1. Sélection d'actif : Menu déroulant permettant de choisir une action parmi les entreprises majeures du CAC 40.       2. Graphique interactif : Visualisation en chandeliers avec sélecteur de période (1 mois, 6 mois, 1 an).       3. Indicateurs clés :          • Cours actuel (ex: 206,50 € pour Airbus).          • Volatilité sur 7 jours (ex: 1,12%).          • Score de sentiment médiatique.          • Tendance prédite (Haussière / Baissière).       4. Actualités : Marquee affichant les dernières news financières traduites en français.       5. Note de synthèse : Analyse textuelle dynamique générée par Mistral AI.
+- **Machine Learning** :  
+  Modèle de prédiction à court terme basé sur un **Random Forest Regressor**, utilisé pour estimer le prix de clôture à **J+1**.
 
-III. Technologies utilisées
-Langage : Python 3.10+
+- **Intelligence Artificielle** :  
+  Génération d’une analyse textuelle synthétique via **Mistral AI**, permettant de contextualiser les résultats quantitatifs.
 
-Interface : Dash & Dash Bootstrap Components
+> **Note :**  
+> L’objectif du projet est de fournir une **aide à la lecture des marchés financiers**.  
+> Il ne prétend ni remplacer une analyse humaine, ni fournir des conseils en investissement.
 
-Graphiques : Plotly Graph Objects
+---
 
-Données : yfinance & Finnhub API
+## II. Fonctionnalités principales
 
-Intelligence Artificielle : Mistral AI
+1. **Sélection d’actif**  
+   Menu déroulant permettant de choisir une action parmi les entreprises majeures du CAC 40.
 
-Analyse NLP : NLTK – VADER
+2. **Graphique interactif**  
+   Visualisation en chandeliers japonais avec sélecteur de période :
+   - 1 mois
+   - 6 mois
+   - 1 an
 
-Machine Learning : Scikit-learn (Random Forest)
+3. **Indicateurs clés**
+   - Cours actuel (exemple : *206,50 € pour Airbus*)
+   - Volatilité sur 7 jours (exemple : *1,12 %*)
+   - Score de sentiment médiatique
+   - Tendance prédite (*Haussière / Baissière*)
 
-IV. Installation
-1. Cloner le dépôt
-Bash
+4. **Actualités**
+   - Bandeau (*marquee*) affichant les dernières actualités financières
+   - Traduction automatique en français
 
+5. **Note de synthèse**
+   - Analyse textuelle dynamique générée par **Mistral AI**
+   - Mise en perspective des indicateurs financiers et du sentiment médiatique
+
+---
+
+## III. Technologies utilisées
+
+- **Langage** : Python 3.10+
+- **Interface** : Dash, Dash Bootstrap Components
+- **Graphiques** : Plotly Graph Objects
+- **Données financières** : yfinance, Finnhub API
+- **Intelligence Artificielle** : Mistral AI
+- **Analyse NLP** : NLTK – VADER
+- **Machine Learning** : Scikit-learn (Random Forest)
+
+---
+
+## IV. Installation
+
+### 1. Cloner le dépôt
+
+```bash
 git clone <URL_DU_DEPOT>
 cd <NOM_DU_DEPOT>
 2. Créer un environnement virtuel
-Bash
-
+bash
+Copier le code
 # Linux / Mac
 python -m venv venv
 source venv/bin/activate
@@ -49,52 +85,67 @@ source venv/bin/activate
 python -m venv venv
 venv\Scripts\activate
 3. Installer les dépendances
-Bash
-
+bash
+Copier le code
 pip install -r requirements.txt
-Le fichier requirements.txt contient : dash, dash-bootstrap-components, yfinance, finnhub-python, mistralai, nltk, scikit-learn, plotly.
+Le fichier requirements.txt contient notamment :
+
+dash
+
+dash-bootstrap-components
+
+yfinance
+
+finnhub-python
+
+mistralai
+
+nltk
+
+scikit-learn
+
+plotly
 
 4. Télécharger les ressources NLTK
-Python
-
+python
+Copier le code
 import nltk
 nltk.download('vader_lexicon')
 5. Configurer les clés API
-Ajoutez vos clés dans config.py ou directement dans app_final.py :
+Ajoutez vos clés API dans le fichier config.py ou directement dans app_final.py :
 
-Python
-
+python
+Copier le code
 FINNHUB_KEY = "<votre_cle_finnhub>"
 MISTRAL_KEY = "<votre_cle_mistral>"
 V. Lancement de l’application
-Bash
-
+bash
+Copier le code
 python app_final.py
-L’application s’exécute localement sur : http://127.0.0.1:8050/
+L’application s’exécute localement à l’adresse suivante :
+👉 http://127.0.0.1:8050/
 
 VI. Structure du projet
-Le projet est organisé de manière modulaire (18 éléments constitutifs) :
+Le projet est organisé de manière modulaire :
 
+bash
+Copier le code
 /terminal-expert
 │
-├─ app_final.py        # Script principal contenant l’application Dash
+├─ app_final.py        # Script principal de l’application Dash
 ├─ requirements.txt    # Liste des dépendances Python
 ├─ README.md           # Documentation du projet
-├─ config.py           # Configuration des clés d'accès API
+├─ config.py           # Configuration des clés API
 ├─ /assets             # Styles CSS et ressources graphiques
 └─ /data               # Données historiques au format CSV
-VII. Limites
-Les prédictions du modèle sont à court terme (J+1) et purement indicatives.
-
-Les scores de sentiment dépendent de la qualité et du volume des articles fournis par l'API.
-
-Les performances peuvent varier selon le temps de réponse des API externes (Mistral, Finnhub).
 
 Identification
+
 Auteurs :
 
-Samuel Nancy - 44009631
+Samuel Nancy – 44009631
 
-Bakekolo Rose - 44000281
+Bakekolo Rose – 44000281
 
-Formation : Licence Économie et Gestion Parcours CMI (TD7) Janvier 2026
+Formation :
+Licence Économie et Gestion – Parcours CMI (TD11)
