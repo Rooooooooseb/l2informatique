@@ -1,62 +1,110 @@
 # l2informatique
 
-Terminal Expert CAC40 - Analyse IA et Stratégique
+## 📊 Terminal Expert CAC40 – Analyse IA & Stratégique
 
-I. Présentation du projet
-Ce projet consiste en un terminal boursier interactif dédié à l'analyse des 12 principales capitalisations du CAC 40. Il s'appuie sur un système hybride combinant la science des données classique et l'intelligence artificielle générative.
+---
 
-      L'objectif principal est de corréler des données quantitatives (prix et volumes) avec des analyses qualitatives issues du traitement du langage naturel (NLP) afin d'offrir une aide à la décision structurée.
-      
-      
+## I. Présentation du projet
 
-II. Architecture Technique
-Le projet est segmenté en plusieurs modules technologiques complémentaires :
+Ce projet consiste en un **terminal boursier interactif** dédié à l’analyse des principales capitalisations du **CAC 40**.  
+Il repose sur une **approche hybride** combinant :
 
-Collecte et Gestion des Données
-Utilisation de la bibliothèque yfinance pour l'extraction de 10 ans d'historique boursier.
-Génération de fichiers CSV locaux pour assurer l'intégrité et la rapidité d'accès aux jeux de données.
-Mise à jour dynamique des cours en temps réel pour l'affichage des indicateurs actuels.
-Modélisation et Intelligence Artificielle
-Machine Learning : Implémentation d'un algorithme Random Forest Regressor pour l'estimation du prix à J+1.
-NLP (VADER) : Calcul automatique d'un score de polarité (-1 à +1) basé sur les actualités financières récentes.
-IA Générative (Mistral) : Analyse textuelle avancée pour transformer les flux de NewsAPI en synthèses stratégiques exploitables.
-Interface Utilisateur (Dash)
-Développement d'un tableau de bord professionnel avec graphiques en chandeliers japonais.
-Intégration d'indicateurs de volatilité et de jauges de confiance médiatique.
+- **Méthodes classiques de science des données**
+- **Modèles de Machine Learning**
+- **Analyse du langage naturel (NLP)**
+- **IA générative utilisée uniquement comme outil d’interprétation**
+
+🎯 **Objectif principal**  
+Corréler des **données quantitatives de marché** (prix, rendements, volatilité) avec des **signaux informationnels issus de l’actualité financière**, afin de fournir une **aide à la décision structurée, explicable et non hallucinatoire**.
+
+Le projet ne vise pas à produire des recommandations automatiques, mais à **éclairer la prise de décision** à partir de données objectives.
+
+---
+
+## II. Architecture technique
+
+Le système est conçu de manière **modulaire**, chaque composant ayant un rôle bien défini.
+
+### 1️⃣ Collecte et gestion des données
+
+- **yfinance**
+  - Extraction de l’historique boursier (jusqu’à 10 ans)
+  - Données OHLC, volumes, rendements
+- **Stockage local**
+  - Génération de fichiers CSV
+  - Garantit la reproductibilité et la rapidité d’accès
+- **Mise à jour dynamique**
+  - Actualisation des cours pour l’affichage temps réel des indicateurs
+
+---
+
+### 2️⃣ Modélisation & Intelligence Artificielle
+
+#### 🔹 Machine Learning (cœur du système)
+- Algorithme : **Random Forest**
+- Objectif :
+  - Estimation du prix à **J+1**
+  - Qualification de la **tendance attendue**
+- Utilisation de features quantitatives et informationnelles combinées
+
+#### 🔹 NLP – Analyse de sentiment
+- Méthode : **VADER**
+- Application :
+  - Analyse des titres d’actualités financières
+  - Calcul d’un score de polarité normalisé (-1 à +1)
+- Pondération temporelle pour privilégier les news récentes
+
+#### 🔹 IA générative (Mistral)
+⚠️ L’IA générative **n’est pas décisionnelle**.
+
+- Rôle :
+  - Interpréter les résultats du modèle ML
+  - Générer une **synthèse stratégique lisible**
+- Contraintes strictes :
+  - Aucune connaissance externe
+  - Analyse uniquement basée sur les données fournies
+
+---
+
+### 3️⃣ Interface utilisateur (Dash)
+
+- Tableau de bord interactif développé avec **Dash**
+- Visualisations :
+  - Graphiques en chandeliers japonais
+  - Indicateurs de volatilité
+  - Scores de sentiment
+- Interface pensée pour une lecture **claire et professionnelle**
+
+---
+
+## III. Fonctionnalités principales
+
+1. **Sélecteur d’actifs**
+   - Menu déroulant couvrant plusieurs entreprises majeures du CAC 40
+   - Exemple : Airbus, LVMH, TotalEnergies
+
+2. **Indicateurs décisionnels**
+   - Cours actuel
+   - Score de sentiment informationnel
+   - Volatilité hebdomadaire
+
+3. **Tendance prédictive**
+   - Estimation issue du modèle de Machine Learning
+   - Indication visuelle :  
+     **HAUSSIÈRE / NEUTRE / BAISSIÈRE**
+
+4. **Synthèse stratégique**
+   - Analyse automatisée et contextualisée
+   - Mise en perspective des signaux quantitatifs et informationnels
+   - Évaluation de la fiabilité des projections
+
+---
+
+## IV. Structure du répertoire
+
+Le dépôt GitHub est organisé de manière modulaire :
 
 
-
-III. Fonctionnalités principales
-      1. Sélecteur d'actifs : Menu déroulant couvrant les entreprises majeures telles qu'Airbus, LVMH ou TotalEnergies.
-      2. Indicateurs décisionnels : Affichage du cours actuel (ex: 206,50 € pour Airbus), du score de confiance et de la volatilité hebdomadaire.
-      3. Tendance prédictive : Qualification visuelle de la tendance attendue (HAUSSIÈRE / BAISSIÈRE) générée par le modèle prédictif.
-      4. Synthèse stratégique : Rédaction automatisée portant sur les seuils de support technique et la fiabilité des projections.
-      
-      
-      
-
-IV. Structure du répertoire
-Le dépôt GitHub est organisé de manière modulaire (18 éléments constitutifs) :
-
-      • app_final.py : Script central de l'application Dash et gestion des callbacks.
-
-      • collecte.py : Automatisation de la récupération des données historiques.
-
-      • ia_model.py : Définition et entraînement du modèle Random Forest.
-
-      • traitement_donnees.py : Nettoyage et ingénierie des variables (features).
-
-      • /data : Dossier contenant les bases de données historiques au format CSV.
-
-      
-
-V. Identification
-Auteurs :
-
-Samuel Nancy - 44009631
-Bakekolo Rose - 44000281
-Formation : Licence Économie et Gestion Parcours CMI (TD11)
-Date : Janvier 2026
 
 
 
