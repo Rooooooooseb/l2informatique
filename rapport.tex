@@ -1,1 +1,457 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{graphicx}
+\usepackage{geometry}
+\usepackage{color}
+\usepackage{setspace}
+\usepackage{titling}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{float}
+\usepackage{eso-pic}
 
+\geometry{left=2cm,right=2cm,top=2cm,bottom=2cm}
+\pagestyle{empty}
+
+\begin{document}
+
+\newcommand{\borduregauche}{
+  \AddToShipoutPictureFG*{
+    \put(-35,420){\includegraphics[height=\paperheight]{Bordure.png}}
+  }
+}
+
+\borduregauche
+
+\begin{titlepage}
+
+\begin{center}
+    \vspace*{1cm}
+\hspace*{-2cm}
+\includegraphics[width=9.5cm]{logo_Paris_Nanterre_couleur_RVB.png}
+\vspace{0.5cm}
+\noindent
+
+        \begin{center}
+        \vspace{0.0cm} 
+        \noindent
+        \begin{center}
+            {\Large Licence économie-gestion (CMI) – 2\textsuperscript{e} année}\\[0.8cm]
+
+            {\Huge \textbf{Rapport de projet informatique}}\\[2.5cm]
+            {\Huge \textit{Prédiction du cours boursier}}\\[1.9cm]
+
+            {\Large Projet réalisé de septembre 2025 au 6 janvier 2026}\\[1.5cm]
+
+            {\Large Membres du groupe :}\\[0.5cm]
+    
+    \begin{center}
+    \begin{minipage}{0.3\textwidth}
+        \centering
+        \includegraphics[width=3.5cm]{nancy.jpg}\\
+        \caption{Samuel Nancy\\44009631}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.3\textwidth}
+        \centering
+        \includegraphics[width=3.5cm]{rose.jpg}
+        \caption{Bakekolo Rose\\44000281}
+    \end{minipage}
+\end{center}
+
+\vspace{1,5cm}
+            \textit{Année universitaire 2025–2026} \\
+            \href{https://github.com/Rooooooooseb/l2informatique.git}{Lien GitHub} \\            \end{center}
+
+\end{titlepage}
+
+\newpage
+\thispagestyle{empty} % pas de numéro sur cette page
+
+
+\tableofcontents
+\vspace{1cm} 
+\end{center}
+
+\newpage
+
+\section{Introduction}
+Les marchés financiers sont influencés par bien plus que des chiffres. Au-delà des données économiques et des indicateurs financiers traditionnels, ils réagissent également aux anticipations, aux émotions et aux perceptions des investisseurs. L’actualité façonne en permanence le sentiment du marché et peut provoquer des mouvements parfois rapides et difficiles à expliquer uniquement par l’analyse des prix passés.
+
+\vspace{0.5cm}
+
+Cette intuition est aujourd’hui largement étudiée dans la littérature académique, notamment dans le champ de la finance comportementale. De nombreux travaux scientifiques ont montré qu’il existe une relation mesurable entre le sentiment exprimé dans les médias ou sur les plateformes d’information et l’évolution des cours boursiers. Grâce aux avancées récentes en traitement automatique du langage naturel (NLP), il est désormais possible de transformer des données textuelles, telles que des titres d’actualité, en indicateurs quantitatifs exploitables par des modèles statistiques et de machine learning.
+
+\vspace{0.5cm}
+
+L’objectif de ce projet est d’explorer comment l’analyse de sentiment issue de l’actualité financière peut être combinée à des données boursières historiques afin d’enrichir un modèle de prédiction du prix d’une action. En s’appuyant sur des entreprises du CAC 40, le projet vise à mettre en œuvre une méthodologie complète intégrant la récupération de données réelles et l'analyse des sentiments.
+
+\vspace{0.5cm}
+
+Il ne s’agit pas de prétendre prédire parfaitement l’évolution des marchés, mais plutôt de comprendre comment ces différentes sources d’information peuvent être articulées dans un cadre concret et reproductible. Il met en évidence le potentiel, mais également les limites des approches fondées sur l’intelligence artificielle appliquées à la finance.
+
+\vspace{0.5cm}
+
+Ce projet s’inscrit également dans la continuité de notre parcours CMI D3S en mobilisant des compétences liées à la collecte, à la manipulation et à l’interprétation de données issues de sources hétérogènes.
+
+
+\section{Environnement de travail}
+Le projet a été développé sur un ordinateur personnel de type PC portable (Acer) fonctionnant sous Windows.
+\vspace{0.5cm}
+
+Le langage de programmation utilisé est Python, principalement en raison de sa simplicité d’utilisation et de sa lisibilité, ce qui en fait un langage particulièrement adapté à un projet académique. 
+\vspace{0.5cm}
+
+Le développement a été réalisé à l’aide d’un environnement Python standard, avec une exécution locale de l’application via un serveur Dash. L’ensemble du code est exécuté localement, sans infrastructure cloud, ce qui permet de tester et de visualiser facilement l’application directement dans un navigateur web.
+
+\clearpage
+
+\section{Description du projet et objectifs}
+\subsection{Présentation générale et cadre technique}
+Le projet consiste à développer une application web interactive permettant d’analyser et de prédire l’évolution du cours boursier d’entreprises du CAC 40. L’utilisateur peut sélectionner une entreprise, une devise d’affichage ainsi qu’un horizon d’investissement. L’application récupère alors les données boursières historiques correspondantes et les combine avec un indicateur de sentiment issu de l’analyse des actualités financières récentes.
+
+Un modèle de machine learning de type Random Forest Regressor est entraîné à partir de ces données afin d’estimer le prix de clôture futur de l’action à un horizon de 24 heures. L’objectif n’est pas d’obtenir une prédiction parfaite, mais de démontrer une méthodologie complète intégrant des données financières, une analyse de sentiment et de l’intelligence artificielle. 
+
+\subsection{Évolution du périmètre d'étude}
+Initialement, notre étude devait se concentrer exclusivement sur deux entreprises emblématiques du CAC 40 : TotalEnergies et Renault. Ce choix de départ nous permettait d'analyser deux secteurs d'activité distincts, l'énergie et l'automobile, afin d'observer comment des actualités sectorielles spécifiques influençaient leurs cours respectifs.
+Cependant, au fil du développement, nous avons réalisé qu'un périmètre aussi restreint limitait la démonstration de la robustesse de notre modèle. Nous avons donc pris la décision d'élargir notre projet à douze entreprises du CAC 40 (Airbus, LVMH, Sanofi, etc). Cette évolution a nécessité une automatisation plus rigoureuse de la collecte des données via les API et une gestion dynamique des flux d'informations pour douze actifs différents, renforçant ainsi la dimension technique et l'intérêt de notre outil.
+
+
+\section{Bibliothèques, outils et technologies}
+ Le projet repose sur plusieurs bibliothèques Python qui interviennent chacune à un moment précis du traitement des données. Le choix de ces outils s’est fait progressivement, en fonction des besoins rencontrés au cours du développement.
+
+
+
+\subsubsection*{Dash et Dash Bootstrap Components}
+Dash a été utilisé pour développer l’interface web du terminal boursier. Il permet de créer une application interactive uniquement en Python, ce qui évite d’avoir à gérer du JavaScript. \\
+Concrètement, Dash gère :
+\begin{itemize}
+    \item la sélection de l’actif via un menu déroulant,
+    \item la mise à jour automatique des graphiques,
+    \item l’affichage des indicateurs et de l’analyse lorsque l’utilisateur change d’entreprise.
+\end{itemize}
+La bibliothèque \texttt{dash\_bootstrap\_components} a été ajoutée pour améliorer la mise en page (cartes, colonnes, lignes) et obtenir une interface plus lisible et structurée.
+
+\subsubsection*{Plotly Graph Objects}
+Plotly est utilisé pour l’affichage du graphique principal. Le choix des chandeliers japonais s’impose car ils sont la représentation la plus utilisée en analyse technique. \\
+Dans le code, chaque bougie affiche :
+\begin{itemize}
+    \item le prix d’ouverture,
+    \item le plus haut,
+    \item le plus bas,
+    \item le prix de clôture.
+\end{itemize}
+Un sélecteur de période (1 mois, 6 mois, 1 an) a été ajouté pour permettre à l’utilisateur d’analyser le comportement du titre sur différentes échelles de temps, sans recharger les données.
+
+\subsubsection*{yfinance}
+La bibliothèque \texttt{yfinance} est utilisée pour récupérer les données historiques de marché. Elle fournit les prix journaliers (Open, High, Low, Close) nécessaires à la fois :
+\begin{itemize}
+    \item à l’affichage du graphique,
+    \item aux calculs de rendement et de volatilité,
+    \item à l’entraînement du modèle de prédiction.
+\end{itemize}
+Une période d’un an a été choisie afin d’avoir suffisamment de données tout en restant cohérent avec une logique de prévision à court terme (J+1).
+
+\subsubsection*{Finnhub API}
+Finnhub est utilisée pour récupérer les actualités financières liées à chaque entreprise. Le choix de cette API vient du fait qu’elle fournit des articles directement associés à une société donnée, ce qui est plus pertinent que des flux d’actualité généralistes. \\
+Les actualités sont récupérées sur les 60 derniers jours. Ce compromis permet d’avoir un volume suffisant de titres sans intégrer des informations trop anciennes qui n’auraient plus d’impact sur le marché actuel.
+
+\subsubsection*{NLTK – VADER}
+L’analyse de sentiment repose sur VADER, un outil simple mais efficace pour transformer du texte court (titres de presse) en score numérique. \\
+Chaque titre est analysé séparément, puis un score moyen est calculé. Ce score représente une estimation globale du ton médiatique autour de l’entreprise à un instant donné. Il est ensuite utilisé comme variable d’entrée du modèle de Machine Learning.
+
+
+\subsubsection*{Scikit-learn – Random Forest Regressor}
+Le modèle de prédiction utilisé est un Random Forest Regressor. Ce modèle a été choisi après plusieurs tests, car il donne de meilleurs résultats qu’une régression linéaire simple et s’adapte mieux aux relations non linéaires présentes sur les marchés financiers. \\
+Le modèle cherche à prédire le prix de clôture à J+1 à partir de :
+\begin{itemize}
+    \item du prix actuel,
+    \item du rendement journalier,
+    \item de la volatilité récente,
+    \item du sentiment médiatique.
+\end{itemize}
+
+\subsubsection*{Mistral AI}
+Mistral est utilisé comme un outil d’aide à l’interprétation, et non comme un modèle de prédiction. Il intervient uniquement après le calcul des indicateurs. \\
+Son rôle est double :
+\begin{itemize}
+    \item traduire les titres d’actualité en français pour l’interface,
+    \item formuler une analyse textuelle compréhensible à partir des résultats chiffrés.
+\end{itemize}
+
+
+\section{Travail réalisé}
+Le projet a été développé en plusieurs étapes, avec des versions intermédiaires du code. Chaque étape a permis de corriger les limites de la précédente.
+
+\subsubsection*{Phase 1 — Prototype et récupération des données}
+La première phase a consisté à vérifier que toutes les sources de données fonctionnaient correctement. \\
+Un premier prototype permettait :
+\begin{itemize}
+    \item de sélectionner un actif,
+    \item d’afficher son historique de prix,
+    \item de récupérer quelques actualités.
+\end{itemize}
+À ce stade, aucune prédiction n’était réalisée. L’objectif était simplement de valider que les données de marché et les données textuelles pouvaient être récupérées et affichées sans erreur.
+
+\subsubsection*{Phase 2 — Analyse de sentiment et indicateurs financiers}
+La deuxième phase a porté sur l’enrichissement des données pour transformer des informations brutes en variables exploitables par un modèle statistique. Les rendements journaliers ont été calculés à partir des prix de clôture, puis une volatilité glissante sur sept jours a été ajoutée pour capter la nervosité du marché.\\
+En parallèle, les titres d’actualité ont été analysés pour obtenir un score de sentiment. Pour ce traitement automatique du langage naturel (NLP), nous avons utilisé VADER, un modèle pré-entraîné reconnu pour sa rapidité d'exécution en environnement local.\\
+
+\subsubsection*{Phase 3 — Mise en place du modèle de prédiction}
+Une fois les variables construites, un modèle de Random Forest a été entraîné pour prédire le prix de clôture du lendemain. \\
+Le choix d’une prédiction à J+1 permet de rester dans un cadre réaliste et d’éviter les extrapolations trop longues. Le modèle est réentraîné à chaque mise à jour afin de s’adapter aux dernières données disponibles.
+
+\subsubsection*{Phase 4 — Génération d’une analyse textuelle}
+La dernière phase a consisté à rendre les résultats lisibles pour un utilisateur non spécialiste. \\
+Les indicateurs calculés (tendance, volatilité, sentiment) sont transmis à Mistral, qui génère une analyse structurée expliquant la situation de l’actif. Cette analyse ne remplace pas la prédiction, mais aide à l’interpréter.
+
+
+\section{Difficultés rencontrées}
+
+Au cours du développement du projet, plusieurs difficultés ont été rencontrées, aussi bien sur le plan technique que méthodologique. Ces problèmes ont nécessité des ajustements progressifs du code et des choix initiaux.
+
+\subsection{Qualité et pertinence des données d’actualité}
+L’une des premières difficultés a concerné la récupération des actualités financières. Les premières versions du projet utilisaient une source d’actualité généraliste, ce qui posait deux problèmes principaux :
+\begin{itemize}
+    \item le nombre d’articles disponibles était souvent faible ;
+    \item certains titres n’avaient pas de lien direct avec la situation financière de l’entreprise.
+\end{itemize}
+Cela rendait l’analyse de sentiment peu fiable. Le score calculé pouvait varier fortement d’un jour à l’autre sans que cela corresponde réellement à un changement de tendance sur le marché. Pour corriger cela, nous avons dû faire des choix parmi les sources disponibles. Nous avons notamment renoncé à l'intégration des flux du réseau social X (Twitter) en raison de son coût élevé.
+Le passage final à l’API Finnhub a permis d’améliorer la pertinence des articles. Nous avons privilégié cet outil au détriment de NewsAPI car il se concentre sur les informations boursières professionnelles. Cela nous a permis d'écarter les articles trop généraux qui polluaient nos résultats, même si le volume reste parfois limité pour certaines entreprises.
+
+\subsection{Choix du modèle de prédiction}
+La mise en place du modèle de prédiction a également posé des difficultés. Une première approche basée sur des modèles plus simples (régression linéaire) s’est révélée peu satisfaisante, car elle ne captait pas correctement les variations non linéaires des prix. Le \textit{Random Forest Regressor} donne de meilleurs résultats, mais il présente aussi certaines limites :
+\begin{itemize}
+    \item il nécessite un réentraînement fréquent ;
+    \item son interprétation est moins directe qu’un modèle linéaire ;
+    \item les résultats peuvent varier légèrement d’une exécution à l’autre.
+\end{itemize}
+Ces limites ont été acceptées dans le cadre du projet, car l’objectif n’était pas d’obtenir une prévision parfaite, mais une estimation cohérente à court terme.
+
+\subsection{Cohérence temporelle et surapprentissage}
+Un autre point délicat a été la gestion de la cohérence temporelle des données. Le modèle utilise des données historiques récentes pour prédire le lendemain, ce qui peut introduire un risque de surapprentissage si la fenêtre d’apprentissage est trop courte. Pour limiter ce problème, la période d’analyse a été fixée à un an, ce qui permet de conserver suffisamment d’observations tout en restant cohérent avec une logique de prévision à court terme.
+
+\subsection{Intégration des API et contraintes techniques}
+L’utilisation de plusieurs API externes (\textit{yfinance}, \textit{Finnhub}, \textit{Mistral}) a posé des contraintes techniques : la gestion des clés d’API, les limites de requêtes et les erreurs ponctuelles lors des appels réseau. Pour éviter que l’application ne plante, des blocs \texttt{try/except} ont été intégrés, notamment pour la traduction des actualités. En cas d’échec, une solution de secours est utilisée afin de maintenir le fonctionnement de l'interface.
+
+\subsection{ Lisibilité et interprétation des résultats}
+Enfin, une difficulté importante a concerné la restitution des résultats. Les sorties brutes du modèle (prix prédit, volatilité, score de sentiment) ne sont pas directement exploitables par un utilisateur. Un travail a donc été nécessaire pour sélectionner des indicateurs pertinents, structurer l’analyse textuelle et éviter un discours trop affirmatif sur les prédictions. L’objectif a été de présenter l’outil comme une aide à la décision, et non comme un système de recommandation automatique.
+
+
+
+\section{Fonctionnement et aide de l’IA}
+
+L’intelligence artificielle intervient à plusieurs niveaux dans le projet, mais avec des rôles clairement distincts. Il est important de différencier l’IA utilisée pour la prédiction numérique de celle utilisée pour l’interprétation et la restitution des résultats.
+
+\subsection{Aide apportée par les outils d’IA pendant le développement}
+Au cours du projet, des outils d’IA généralistes (notamment ChatGPT et Gemini) ont été utilisés comme assistants techniques. Leur rôle n’était pas de produire directement le code final, mais d’aider à résoudre des problèmes ponctuels.
+Ils ont principalement été utilisés pour :
+\begin{itemize}
+    \item comprendre la documentation de certaines bibliothèques,
+    \item clarifier des messages d’erreur ou des comportements inattendus,
+    \item proposer des pistes d’optimisation ou de structuration du code.
+\end{itemize}
+Cependant, les solutions proposées n’étaient pas toujours directement exploitables. Dans plusieurs cas, les réponses obtenues étaient incomplètes ou trop génériques, ce qui a nécessité une adaptation manuelle et une vérification approfondie avant intégration dans le projet.
+
+\subsection{Fonctionnement de l’IA intégrée à l’application}
+L’IA intégrée directement dans l’application repose sur l’API Mistral. Elle ne remplace pas le modèle de prédiction, mais intervient après les calculs afin d’aider à l’interprétation des résultats.
+Son fonctionnement peut être résumé en trois étapes :
+\begin{itemize}
+    \item les résultats chiffrés (prix prédit, volatilité, tendance) sont préparés par le script,
+    \item les titres d’actualité sont transmis à l’IA sous une forme structurée,
+    \item l’IA génère un texte explicatif destiné à l’utilisateur.
+\end{itemize}
+L’objectif est de transformer des indicateurs techniques en un commentaire compréhensible, sans modifier les valeurs calculées par le modèle.
+
+\subsection{Rôle de l’IA dans l’analyse finale}
+L’IA est utilisée comme un outil d’aide à la lecture, et non comme un outil de décision automatique. Elle permet de :
+\begin{itemize}
+    \item reformuler les résultats sous forme de phrases claires,
+    \item rappeler les éléments à surveiller (tendance, volatilité, niveaux techniques),
+    \item contextualiser les chiffres à partir de l’information médiatique disponible.
+\end{itemize}
+Le contenu généré reste volontairement descriptif et prudent. Aucune recommandation d’achat ou de vente n’est formulée, afin d’éviter toute interprétation excessive des résultats.
+
+\subsection{Limites de l’utilisation de l’IA}
+L’utilisation d’une IA générative comporte certaines limites. Le texte produit dépend fortement des données fournies en entrée et peut varier d’une exécution à l’autre.
+De plus, l’IA ne dispose pas d’une compréhension réelle du marché financier : elle reformule des informations, mais ne valide pas la pertinence économique des prédictions. Pour cette raison, les résultats générés par l’IA doivent toujours être interprétés en complément des indicateurs chiffrés.
+
+\subsection{Intérêt pédagogique de l’IA dans le projet}
+Dans le cadre de ce projet, l’IA présente surtout un intérêt pédagogique. Elle permet :
+\begin{itemize}
+    \item de mieux comprendre les résultats produits par le modèle,
+    \item de faire le lien entre données numériques et analyse qualitative,
+    \item d’améliorer la lisibilité globale de l’application.
+\end{itemize}
+L’IA est donc utilisée comme un support, et non comme un substitut à l’analyse humaine.
+
+
+\section{Bibliographie et webographie}
+
+Les ressources suivantes ont été utilisées pour la réalisation du projet, aussi bien pour la compréhension des outils que pour leur mise en œuvre technique.
+
+\subsubsection*{Ouvrages}
+Lamport, L., \textit{LaTeX: A Document Preparation System}, Addison-Wesley, 1994.
+
+\subsubsection*{Documentation et ressources en ligne}
+\begin{itemize}
+    \item Dash – Documentation officielle.
+    \item Plotly – Graph Objects Reference.
+    \item yfinance – Documentation Python.
+    \item Finnhub – Stock API Documentation.
+    \item Scikit-learn – Random Forest Regressor Documentation.
+    \item NLTK – VADER Sentiment Analysis.
+    \item Mistral AI – Documentation de l’API.
+\end{itemize}
+
+
+Ces ressources ont permis de comprendre le fonctionnement des bibliothèques utilisées, d’implémenter correctement les différents modules et de résoudre les problèmes rencontrés au cours du développement.
+
+
+\clearpage
+\section{Conclusion et perspectives}
+
+Ce projet avait pour objectif de concevoir un terminal boursier interactif combinant données de marché, analyse de sentiment et modélisation prédictive. Au terme de ce travail, l’application développée permet de visualiser l’évolution d’un actif, d’estimer une tendance à court terme et de proposer une interprétation synthétique des résultats.
+
+\vspace{0.5cm}
+
+Le projet a permis de mettre en pratique plusieurs notions abordées au cours de la formation, notamment la manipulation de données financières, la construction d’indicateurs statistiques, l’utilisation d’un modèle de Machine Learning supervisé et l’intégration d’API externes. Il a également permis de mieux comprendre les limites de la prédiction financière, en particulier lorsque l’on travaille sur des horizons très courts.
+
+\vspace{0.5cm}
+
+L’utilisation de l’intelligence artificielle générative n’a pas été pensée comme une solution automatique, mais comme un outil d’aide à l’interprétation. Elle améliore la lisibilité des résultats sans se substituer à l’analyse quantitative, ce qui correspond davantage à un usage réaliste dans un contexte décisionnel.
+
+\vspace{0.5cm}
+
+Plusieurs pistes d’amélioration pourraient être envisagées. Il serait par exemple possible d’intégrer davantage de variables explicatives, comme des indicateurs techniques supplémentaires ou des données macroéconomiques. Une évaluation plus formelle des performances du modèle, sur une période de test distincte, permettrait également d’affiner l’analyse. Enfin, l’optimisation des temps de calcul et la gestion plus fine des actualités pourraient renforcer la robustesse de l’application.
+
+\vspace{0.5cm}
+
+En conclusion, ce projet constitue une première approche concrète de l’analyse financière assistée par des outils de data science et d’intelligence artificielle. Il met en évidence à la fois le potentiel de ces méthodes et la nécessité de les utiliser avec prudence et esprit critique.
+
+
+
+
+\clearpage
+\section*{Annexes}
+\addcontentsline{toc}{section}{Annexes}
+
+\subsection*{A. Collecte et intégrité des données}
+Cette section documente la phase initiale de cadrage théorique et la résolution des obstacles techniques liés à l'extraction des données boursières historiques.
+
+\begin{figure}[H]
+    \centering
+    \begin{minipage}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{Capture d’écran 2026-01-05 112232.png}
+        \caption{Cadrage initial : Définition des objectifs et du périmètre du projet.}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{Capture d’écran 2025-12-28 184808.png}
+        \caption{Installation des bibliothèques nécessaires via le terminal de commandes.}
+    \end{minipage}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \begin{minipage}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{Capture d'écran 2025-12-28 190628.png}
+        \caption{Développement du script de collecte automatique via l'API yfinance.}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{Capture d’écran 2025-12-28 191550.png}
+        \caption{Validation : Extraction et sauvegarde réussies des fichiers CSV.}
+    \end{minipage}
+\end{figure}
+
+\subsection*{B. Modélisation et Performance du Machine Learning}
+Illustration de l'implémentation de l'analyse de sentiment NLP et de l'entraînement du modèle prédictif Random Forest.
+
+\begin{figure}[H]
+    \centering
+    \begin{minipage}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{Capture d’écran 2026-01-05 112305.png}
+        \caption{NLP : Intégration du modèle VADER pour l'analyse de sentiment.}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{Capture d’écran 2026-01-05 112328.png}
+        \caption{Logique : Corrélation entre score de sentiment et perception marché.}
+    \end{minipage}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \begin{minipage}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{Capture d’écran 2025-12-28 200524.png}
+        \caption{Machine Learning : Résultats de l'erreur moyenne de prédiction (1.28€).}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{Capture d’écran 2025-12-28 200910.png}
+        \caption{Validation : Comparaison graphique entre cours réels et projections IA.}
+    \end{minipage}
+\end{figure}
+
+\subsection*{C. Résolution de Problèmes et Optimisations}
+Cette section illustre les itérations logicielles et l'intégration des API Mistral et Finnhub pour stabiliser l'analyse prédictive.
+
+\begin{figure}[H]
+    \centering
+    \begin{minipage}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{Capture d’écran 2026-01-05 112345.png}
+        \caption{Architecture : Synergie entre NewsAPI et l'intelligence Mistral.}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{Capture d’écran 2026-01-05 112403.png}
+        \caption{Optimisation : Conseils sur la précision des features et des dates.}
+    \end{minipage}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \begin{minipage}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{Capture d’écran 2026-01-05 000115.png}
+        \caption{Débogage : Résolution de l'absence de flux pour certains tickers.}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{Capture d’écran 2026-01-05 000322.png}
+        \caption{Validation finale : Mise en cohérence de l'analyse par actif.}
+    \end{minipage}
+\end{figure}
+
+
+\clearpage
+\subsection*{D. Interface Utilisateur Finale}
+Le terminal boursier expert consolidé présentant les indicateurs en temps réel et les notes de synthèse stratégiques.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\textwidth]{Capture d’écran 2026-01-05 114317.png}
+    \caption{Interface finale : Tableau de bord expert avec indicateurs temps réel (Airbus).}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\textwidth]{Capture d’écran 2026-01-05 114355.png}
+    \caption{Détails d'analyse : Visualisation de la volatilité et synthèse stratégique.}
+\end{figure}
+
+\end{document}
